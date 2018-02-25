@@ -5,16 +5,27 @@ import {RegisterPage} from '../register/register';
 @Component({
   templateUrl: 'login.html'
 })
+
 export class LoginPage {
   selectedItem: any;
   icons: string[];
   items: Array<{title: string, note: string, icon: string}>;
+  loginCredential:{};
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  openRegister(){
-    console.log("hihi");      
-    this.navCtrl.push(RegisterPage);
+  loginCallback = (data) =>{
+    return new Promise((resolve, reject) => {
+      this.loginCredential = data;
+      console.log('return from register',this.loginCredential);
+      resolve();
+    });
+  }
+
+  openRegister(){     
+    this.navCtrl.push(RegisterPage,{
+        callback: this.loginCallback
+    });
   }
 }
